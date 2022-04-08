@@ -10,9 +10,9 @@
 def main():
   decision = input("Welcome! Do you want to write an entries or read an existing one?")
   
-  if decision == "w" or "W"
+  if decision == "w" or "W":
     create_entry()
-  if decision == "r" or "R"
+  if decision == "r" or "R":
     read_entry()
 
   title = input ("What is the title of your entry?")
