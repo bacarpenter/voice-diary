@@ -14,7 +14,7 @@ from entry import Entry
 
 db = None
 
-def initialize_connection():
+def initialize_connection(schema="voice_diary"):
     global db
     """
     Start the Database connection
@@ -24,7 +24,7 @@ def initialize_connection():
     try:
         db = mysql.connector.connect(user='python_user',
                                     password='Python!',
-                                    database='voice_diary')
+                                    database=schema)
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with your user name or password")
