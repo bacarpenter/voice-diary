@@ -6,20 +6,33 @@
 # April 7, 2022
 # ------------- app.py -------------
 import database
+from entry import Entry
+import datetime
 
 def main():
   database.initialize_connection()
-  decision = input("Welcome! Do you want to write an entries or read an existing one?")
-  
-  if decision == "w" or "W":
-    create_entry()
-  if decision == "r" or "R":
-    read_entry()
+  print("--- Voice Diary | Ben Carpenter & Nancy Onyimah ---")
+  mode = input("Would you like to (W)rite or (R)ead an entry? ")
 
-  title = input ("What is the title of your entry?")
+  if mode == "w" or mode == "W":
+    title = input("Title: ")
+    text = input("Body: ")
 
-  text = input ("What do you want to write in your entry?")
+    database.create_entry(title, text)
+  elif mode == "r" or "R":
+    print("List of all entries: ")
+    entries = database.read_all_entries()
+    for entry in entries:
+      print(f"[{entry.id}] {entry.title} | {entry.timestamp}")
+
+    id = input("Which entry would you like to read?")
+    entry = database.read_entry(id)
+
+    print(f"---------- {entry.title} ----------")
+    print(entry.text)
+
   database.close_connection()
+
 
 if __name__ == "__main__":
   main()

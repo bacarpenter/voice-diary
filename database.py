@@ -40,6 +40,12 @@ def close_connection():
     db.close()
 
 
+def create_entry(entry: Entry) -> int:
+    """
+    Create an entry in the database and return an int of it's ID
+    """
+    return create_entry(entry.title, entry.text)
+
 def create_entry(title: str, text: str)-> int:
     """
     Create an entry in the database and return an int of it's ID
@@ -75,7 +81,7 @@ def read_all_entries():
 
     entries = []
     for entry in cursor:
-        entries.append(Entry(entry[0], entry[2], entry[1], entry[3]))
+        entries.append(Entry(entry[0], entry[1], entry[2], entry[3]))
 
     cursor.close()
     return entries
@@ -94,4 +100,4 @@ def read_entry(id: int):
         entries.append(entry)
 
     entry = entries[0]
-    return Entry(entry[0], entry[2], entry[1], entry[3])
+    return Entry(entry[0], entry[1], entry[2], entry[3])
