@@ -16,7 +16,8 @@ def encrypt(string: str, key) -> str:
     """
     # https://pycryptodome.readthedocs.io/en/latest/src/cipher/salsa20.html
     cipher = Salsa20.new(key=key.encode())
-    return cipher.nonce + cipher.encrypt(string.encode())
+    data = cipher.nonce + cipher.encrypt(string.encode())
+    return data.hex()
 
 
 
@@ -24,6 +25,7 @@ def decrypt(string: str, key) -> str:
     """
     Decrypt user text with key
     """
+    string = bytes.fromhex(string)
     # https://pycryptodome.readthedocs.io/en/latest/src/cipher/salsa20.html
     msg_nonce = string[:8]
     ciphertext = string[8:]
