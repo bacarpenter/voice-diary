@@ -8,12 +8,16 @@
 import database
 from entry import Entry
 import crypto
+import speech_recognition as sr
 
 def main():
   database.initialize_connection()
   print("--- Voice Diary | Ben Carpenter & Nancy Onyimah ---")
 
-  key = crypto.convert_passphrase_to_key(input("Passphrase: "))
+  print("Speak passphrase now:")
+  passphrase = get_passphrase()
+  print(f"You said: {passphrase}")
+  key = crypto.convert_passphrase_to_key(passphrase)
 
   mode = input("Would you like to (W)rite or (R)ead an entry? ")
 
@@ -44,5 +48,17 @@ def main():
   database.close_connection()
 
 
+
+def get_passphrase() -> str:
+  # https://realpython.com/python-speech-recognition/
+  r = sr.Recognizer()
+  mic = sr.Microphone()
+
+  with mic as source:
+    audio = r.listen(source)
+
+  passphrase = r.recognize_google(audio)
+  return passphrase
+  
 if __name__ == "__main__":
   main()
