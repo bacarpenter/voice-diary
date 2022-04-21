@@ -8,40 +8,47 @@
 import database
 from entry import Entry
 import crypto
+import GUI
+import graphics
 
 def main():
   database.initialize_connection()
-  print("--- Voice Diary | Ben Carpenter & Nancy Onyimah ---")
+  window = GUI.open_window()
 
-  key = crypto.convert_passphrase_to_key(input("Passphrase: "))
+  state_did_change = True
+  state = "login" # App starts at login page
 
-  mode = input("Would you like to (W)rite or (R)ead an entry? ")
+  # App Loop
+  while True:
+    if state_did_change:
+      match state:
+        case "login": 
+          # Login page
+          drawn_elements = GUI.draw_login(window)
+          state_did_change = False
+        case "read": 
+          # Login page
+          state_did_change = False
+        case "create": 
+          # Login page
+          state_did_change = False
+        case "close":
+          break
+        case _:
+          exit(1)
 
-  if mode == "w" or mode == "W":
-    title = input("Title: ")
-    text = input("Body: ")
+    else:
+      clicked = GUI.get_click(window)
 
-  # Encrypt the text
-    title = crypto.encrypt(title, key)
-    text = crypto.encrypt(text, key)
+      if clicked == GUI.login_elements['login_button']:
+        print("Login Button Clicked")
 
-    database.create_entry(title, text)
+      # Do something with the mouse position
 
-  elif mode == "r" or mode == "R":
-    print("List of all entries: ")
-    entries = database.read_all_entries()
-    for entry in entries:
-      entry.decrypt(key)
-      print(f"[{entry.id}] {entry.title} | {entry.timestamp}")
-
-    id = input("Which entry would you like to read?")
-    entry = database.read_entry(id)
-    entry.decrypt(key)
-
-    print(f"---------- {entry.title} ----------")
-    print(entry.text)
 
   database.close_connection()
+  GUI.close_window(window)
+
 
 
 if __name__ == "__main__":
