@@ -15,6 +15,8 @@ def main():
   database.initialize_connection()
   window = GUI.open_window()
 
+  passphrase = ""
+
   state_did_change = True
   state = "login" # App starts at login page
 
@@ -39,11 +41,23 @@ def main():
 
     else:
       clicked = GUI.get_click(window)
+    
+      if clicked == 'login_button':
+        passphrase = crypto.convert_passphrase_to_key(GUI.login_elements['passphrase_entry'].getText())
+        state = "read" # Once the login is completed, change the state to read mode
+        state_did_change = True
 
-      if clicked == GUI.login_elements['login_button']:
-        print("Login Button Clicked")
+      if clicked == 'create':
+        state = "create"
+        state_did_change = True
 
-      # Do something with the mouse position
+      if clicked == 'save':
+        state == "read"
+        state_did_change = True
+
+      if clicked == "logout":
+        break
+     
 
 
   database.close_connection()
