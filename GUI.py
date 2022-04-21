@@ -6,6 +6,9 @@
 # April 18, 2022
 # ------------- GUI.py -------------
 
+# https://realpython.com/iterate-through-dictionary-python/
+
+
 from typing import Dict, List
 from graphics import GraphWin, GraphicsObject, Entry, Point
 
@@ -41,14 +44,14 @@ def draw_login(window: GraphWin) -> List[GraphicsObject]:
 
     # Start by undrawing any current elements:
     for element in read_elements:
-        element.undraw(window)
+        read_elements[element].undraw(window)
 
     for element in create_elements:
-        element.undraw(window)
+        create_elements[element].undraw(window)
 
     # Draw new elements
     for element in login_elements:
-        element.draw(window)
+        login_elements[element].draw(window)
 
 
 def get_click(window: GraphWin) -> EasyRectangle | None:
@@ -58,10 +61,9 @@ def get_click(window: GraphWin) -> EasyRectangle | None:
 
     mouse_pos = window.getMouse()
 
-    all_elements = login_elements + read_elements + create_elements
-
+    all_elements = {**login_elements, **create_elements, **read_elements}
     for element in all_elements:
-        if type(element) == EasyRectangle and element.clicked(mouse_pos):
+        if type(all_elements[element]) == EasyRectangle and all_elements[element].clicked(mouse_pos):
                 return element
     
     return None # If the click is not in any of the elements, return None.
