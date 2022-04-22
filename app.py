@@ -31,8 +31,11 @@ def main():
           state_did_change = False
         case "read": 
           # Read page
+          entries = database.read_all_entries()
+          for e in entries:
+            e.decrypt(passphrase)
           
-          GUI.draw_read(window, )
+          GUI.draw_read(window, entries, page_start=0, page_end=8)
           state_did_change = False
         case "create": 
           # Login page
@@ -46,6 +49,7 @@ def main():
       clicked = GUI.get_click(window)
       print(clicked)
       if clicked == 'login_button':
+        passphrase = crypto.convert_passphrase_to_key("the cow jumped over the moon")
         state = "read" # Once the login is completed, change the state to read mode
         state_did_change = True
 

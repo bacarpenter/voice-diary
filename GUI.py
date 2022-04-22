@@ -44,9 +44,32 @@ entries_text.setStyle("bold")
 entries_text.setFace("times roman")
 entries_text.setTextColor(color_rgb(166, 112, 169))
 
+page_text = Text(Point(250, 480), "X - X")
+page_down_button = EasyRectangle(Point(200, 470), Point(220, 490))
+page_down_text = Text(Point(210, 480), "←")
+page_up_button = EasyRectangle(Point(280, 470), Point(300, 490))
+page_up_text = Text(Point(290, 480), "→")
+
+logout_button = EasyRectangle(Point(150, 470), Point(170, 490))
+logout_text = Text(Point(160, 480), "Log\nOut")
+logout_text.setSize(8)
+
+create_button = EasyRectangle(Point(330, 470), Point(350, 490))
+create_text = Text(Point(340, 480), "New")
+create_text.setSize(8)
+
 read_elements = {
     # The items that make up the Read Screen go here
-    "entries_text": entries_text
+    "entries_text": entries_text,
+    "page_text": page_text,
+    "page_down": page_down_button,
+    "page_down_text": page_down_text,
+    "page_up": page_up_button,
+    "page_up_text": page_up_text,
+    "logout": logout_button,
+    "logout_text": logout_text,
+    "create": create_button,
+    "create_text": create_text
 }
 
 create_elements = {
@@ -79,14 +102,17 @@ def draw_login(window: GraphWin):
         login_elements[element].draw(window)
 
 
-def draw_read(window: GraphWin, entries: List[entry.Entry]):
+def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, page_end: int):
     # Add entry elements to the element list
     global read_elements
 
     entry_elements = {}
     top_left_y = 75
-    for entry in entries:
-        entry_elements.update({entry.id: EntryButton(Point(25, top_left_y), entry.title, entry.body)}),
+
+    if page_end > len(entries): page_end = len(entries)
+    
+    for entry in entries[page_start: page_end]:
+        entry_elements.update({entry.id: EntryButton(Point(25, top_left_y), entry.title, entry.text)}),
         top_left_y += 60
 
     read_elements.update(entry_elements) # https://www.programiz.com/python-programming/methods/dictionary/update
@@ -96,6 +122,8 @@ def draw_read(window: GraphWin, entries: List[entry.Entry]):
 
     for element in login_elements:
         login_elements[element].undraw()
+
+    read_elements['page_text'].setText(f"{page_start} - {page_end}")
 
     for element in read_elements:
         read_elements[element].draw(window)
@@ -113,7 +141,6 @@ def get_click(window: GraphWin) -> EasyRectangle | None:
             if all_elements[element].clicked(mouse_pos):
                 return element
         elif type(all_elements[element]) == EntryButton:
-            print(type(all_elements[element]))
             if all_elements[element].go_button.clicked(mouse_pos):
                 return element
     
