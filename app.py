@@ -48,21 +48,23 @@ def main():
     else:
       clicked = GUI.get_click(window)
       print(clicked)
-      if clicked == 'login_button':
-        passphrase = crypto.convert_passphrase_to_key("the cow jumped over the moon")
-        state = "read" # Once the login is completed, change the state to read mode
-        state_did_change = True
 
-      if clicked == 'create':
-        state = "create"
-        state_did_change = True
+      match clicked:
+        case 'login_button':
+          passphrase = crypto.convert_passphrase_to_key("the cow jumped over the moon")
+          state = "read" # Once the login is completed, change the state to read mode
+          state_did_change = True
 
-      if clicked == 'save':
-        state == "read"
-        state_did_change = True
+        case 'create':
+          state = "create"
+          state_did_change = True
 
-      if clicked == "logout":
-        break
+        case 'save':
+          state == "read"
+          state_did_change = True
+
+        case "logout":
+          break
      
 
 
