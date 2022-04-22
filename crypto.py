@@ -32,4 +32,9 @@ def decrypt(string: str, key) -> str:
     cipher = Salsa20.new(key=key.encode(), nonce=msg_nonce)
     plaintext = cipher.decrypt(ciphertext)
 
-    return plaintext.decode()
+    try:
+        plaintext = plaintext.decode()
+    except UnicodeDecodeError:
+        plaintext = None
+    
+    return plaintext
