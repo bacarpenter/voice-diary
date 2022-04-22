@@ -8,6 +8,7 @@
 
 # https://realpython.com/iterate-through-dictionary-python/
 
+import re
 from graphics import GraphWin, GraphicsObject, Entry, Point, Circle, Text, color_rgb
 import entry
 
@@ -109,16 +110,31 @@ def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, pag
     entry_elements = {}
     top_left_y = 75
 
+    for element in read_elements:
+        read_elements[element].undraw()
+
+    read_elements = {
+        # The items that make up the Read Screen go here
+        "entries_text": entries_text,
+        "page_text": page_text,
+        "page_down": page_down_button,
+        "page_down_text": page_down_text,
+        "page_up": page_up_button,
+        "page_up_text": page_up_text,
+        "logout": logout_button,
+        "logout_text": logout_text,
+        "create": create_button,
+        "create_text": create_text
+    }
+
     if page_end > len(entries): page_end = len(entries)
     
-    for entry in entries[page_start: page_end]:
+    for entry in entries[page_start - 1: page_end-1]:
         entry_elements.update({entry.id: EntryButton(Point(25, top_left_y), entry.title, entry.text)}),
         top_left_y += 60
 
     read_elements.update(entry_elements) # https://www.programiz.com/python-programming/methods/dictionary/update
 
-    for element in create_elements:
-        create_elements[element].undraw()
 
     for element in login_elements:
         login_elements[element].undraw()

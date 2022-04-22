@@ -42,6 +42,15 @@ class EntryButton:
         self.go_button.draw(window)
         self.go_text.draw(window)
 
+    def undraw(self):
+        self.title_rectangle.undraw()
+        self.title_text.undraw()
+        self.body_rectangle.undraw()
+        self.body_text.undraw()
+        self.go_button.undraw()
+        self.go_text.undraw()
+
+
     def limit_text(self, text: str, length: int):
       if len(text) > length:
         return text[0:length - 4] + "..."

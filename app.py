@@ -21,6 +21,9 @@ def main():
   state_did_change = True
   state = "login" # App starts at login page
 
+  page_start = 1
+  page_end = 7
+
   # App Loop
   while True:
     if state_did_change:
@@ -35,7 +38,7 @@ def main():
           for e in entries:
             e.decrypt(passphrase)
           
-          GUI.draw_read(window, entries, page_start=0, page_end=8)
+          GUI.draw_read(window, entries, page_start, page_end)
           state_did_change = False
         case "create": 
           # Login page
@@ -59,8 +62,19 @@ def main():
           state = "create"
           state_did_change = True
 
+        case 'page_up':
+          page_start += 8
+          page_end += 8
+          state_did_change = True
+
+        case 'page_down':
+          page_start -= 8
+          page_end -= 8
+          state_did_change = True
+          
+
         case 'save':
-          state == "read"
+          state = "read"
           state_did_change = True
 
         case "logout":
