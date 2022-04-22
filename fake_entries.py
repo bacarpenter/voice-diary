@@ -1,7 +1,7 @@
 import crypto
 import database
 
-database.initialize_connection()
+database.initialize_connection(schema="voice_diary_test")
 key = crypto.convert_passphrase_to_key("the cow jumped over the moon")
 
 i = int(input("# "))
