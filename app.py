@@ -14,6 +14,7 @@ import graphics
 def main():
   database.initialize_connection()
   window = GUI.open_window()
+  window.setBackground(graphics.color_rgb(255, 196, 252))
 
   passphrase = ""
 
@@ -26,10 +27,11 @@ def main():
       match state:
         case "login": 
           # Login page
-          drawn_elements = GUI.draw_login(window)
+          GUI.draw_login(window)
           state_did_change = False
         case "read": 
-          # Login page
+          # Read page
+          GUI.draw_read(window)
           state_did_change = False
         case "create": 
           # Login page
@@ -41,9 +43,8 @@ def main():
 
     else:
       clicked = GUI.get_click(window)
-    
+      print(clicked)
       if clicked == 'login_button':
-        passphrase = crypto.convert_passphrase_to_key(GUI.login_elements['passphrase_entry'].getText())
         state = "read" # Once the login is completed, change the state to read mode
         state_did_change = True
 
