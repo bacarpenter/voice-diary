@@ -7,6 +7,7 @@
 # ------------- database.py -------------
 
 # Connection initialization 
+from typing import List
 import mysql.connector
 from mysql.connector import errorcode
 import datetime
@@ -67,7 +68,7 @@ def create_entry(title: str, text: str)-> int:
     cursor.close()
     return entry_id
 
-def read_all_entries():
+def read_all_entries() -> List[Entry]:
     """
     Return all journal entries in the database
     """
