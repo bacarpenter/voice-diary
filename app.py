@@ -31,7 +31,8 @@ def main():
           state_did_change = False
         case "read": 
           # Read page
-          GUI.draw_read(window)
+          
+          GUI.draw_read(window, )
           state_did_change = False
         case "create": 
           # Login page

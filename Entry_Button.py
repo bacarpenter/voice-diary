@@ -2,7 +2,7 @@ from graphics import *
 from EasyRectangle import EasyRectangle
 
 class EntryButton:
-    def __init__(self, top_left: Point, title: str, body: str, id: int):
+    def __init__(self, top_left: Point, title: str, body: str):
         tl_x = top_left.getX() # For easier use
         tl_y = top_left.getY()
         self.title_rectangle = EasyRectangle(
@@ -33,8 +33,6 @@ class EntryButton:
         )
 
         self.go_text = Text(Point(tl_x + 112.5 + 225 + (112.5 / 2), tl_y + 25), "Read →")
-
-        self.id = id
 
     def draw(self, window: GraphWin):
         self.title_rectangle.draw(window)

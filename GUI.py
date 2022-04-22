@@ -9,9 +9,11 @@
 # https://realpython.com/iterate-through-dictionary-python/
 
 from graphics import GraphWin, GraphicsObject, Entry, Point, Circle, Text, color_rgb
+import entry
 
 from EasyRectangle import EasyRectangle
 from Entry_Button import EntryButton
+from typing import List
 
 mic_button = EasyRectangle(Point(210,210), Point(290, 290))
 mic_button.setFill(color_rgb(166, 112, 169))
@@ -77,9 +79,17 @@ def draw_login(window: GraphWin):
         login_elements[element].draw(window)
 
 
-def draw_read(window: GraphWin):
-    e = EntryButton(Point(25, 75), "Title", "Body text", 14)
-    e.draw(window)
+def draw_read(window: GraphWin, entries: List[entry.Entry]):
+    # Add entry elements to the element list
+    global read_elements
+
+    entry_elements = {}
+    top_left_y = 75
+    for entry in entries:
+        entry_elements.update({entry.id: EntryButton(Point(25, top_left_y), entry.title, entry.body)}),
+        top_left_y += 60
+
+    read_elements.update(entry_elements) # https://www.programiz.com/python-programming/methods/dictionary/update
 
     for element in create_elements:
         create_elements[element].undraw()
@@ -102,8 +112,9 @@ def get_click(window: GraphWin) -> EasyRectangle | None:
         if type(all_elements[element]) == EasyRectangle:
             if all_elements[element].clicked(mouse_pos):
                 return element
-        elif type(all_elements[element] == EntryButton):
+        elif type(all_elements[element]) == EntryButton:
+            print(type(all_elements[element]))
             if all_elements[element].go_button.clicked(mouse_pos):
-                return all_elements[element].id
+                return element
     
     return None # If the click is not in any of the elements, return None.
