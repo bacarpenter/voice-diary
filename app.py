@@ -83,6 +83,9 @@ def main():
               else:
                 state = "read" # Once the login is completed, change the state to read mode
                 state_did_change = True
+            else:
+              state = "read" # Once the login is completed, change the state to read mode
+              state_did_change = True
 
         case 'create':
           state = "create"
