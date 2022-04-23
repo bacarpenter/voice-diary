@@ -31,11 +31,14 @@ login_text.setStyle("bold")
 login_text.setFace("times roman")
 login_text.setTextColor(color_rgb(166, 112, 169))
 
+notification = Text(Point(250, 375), "")
+
 login_elements= {
     # The items that make up the Login Screen go here
     "welcome_text": welcome_text,
     "login_button": mic_button,
     "instruction_text": login_text,
+    "notification": notification
 }
 
 
@@ -101,6 +104,9 @@ def draw_login(window: GraphWin):
     # Draw new elements
     for element in login_elements:
         login_elements[element].draw(window)
+
+def update_login_notification(text: str):
+    notification.setText(text)
 
 
 def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, page_end: int):

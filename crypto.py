@@ -21,7 +21,7 @@ def encrypt(string: str, key) -> str:
 
 
 
-def decrypt(string: str, key) -> str:
+def decrypt(string: str, key) -> str | None:
     """
     Decrypt user text with key
     """

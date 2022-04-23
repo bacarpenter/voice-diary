@@ -5,11 +5,16 @@
 # Ben Carpenter and Nancy Onyimah
 # April 7, 2022
 # ------------- app.py -------------
+from crypt import crypt
+from time import sleep
 import database
 from entry import Entry
 import crypto
 import GUI
 import graphics
+import speech_recognition as sr
+import spech_rec_helpers as sr_helpers
+from playsound import playsound 
 
 def main():
   database.initialize_connection()
@@ -54,9 +59,30 @@ def main():
 
       match clicked:
         case 'login_button':
-          passphrase = crypto.convert_passphrase_to_key("the cow jumped over the moon")
-          state = "read" # Once the login is completed, change the state to read mode
-          state_did_change = True
+
+          recognizer = sr.Recognizer()
+          microphone = sr.Microphone()
+
+          # Listen for speech
+          GUI.update_login_notification("Listening:")
+          spoken_phrase = sr_helpers.recognize_speech_from_mic(recognizer, microphone)
+
+          if spoken_phrase['success'] == False:
+            GUI.update_login_notification("Sorry, something went wrong. Try again")
+          elif spoken_phrase['transcription'] == None:
+            GUI.update_login_notification("We didn't hear anything")
+          else:
+            passphrase = crypto.convert_passphrase_to_key(spoken_phrase['transcription'])
+
+            # Check if passphrase is correct by seeing if it decrypts an entry. If there are no entries, ignore this check
+            all_entries = database.read_all_entries()
+            if len(all_entries) != 0:
+              all_entries[0].decrypt(passphrase)
+              if  all_entries[0].text == None:
+                GUI.update_login_notification(f"Incorrect passphrase. We heard: {spoken_phrase['transcription']}")
+              else:
+                state = "read" # Once the login is completed, change the state to read mode
+                state_did_change = True
 
         case 'create':
           state = "create"
