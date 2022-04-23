@@ -80,6 +80,28 @@ create_elements = {
     # The items that make up the Create Screen go here
 }
 
+read_entry_title = Text(Point(100,50), "")
+read_entry_title.setSize(24)
+read_entry_title.setStyle("bold")
+read_entry_title.setFace("times roman")
+read_entry_title.setTextColor(color_rgb(166, 112, 169))
+
+read_entry_body = Text(Point(250,100), "")
+read_entry_body.setSize(12)
+read_entry_body.setFace("times roman")
+read_entry_body.setTextColor(color_rgb(166, 112, 169))
+
+read_entry_back = EasyRectangle(Point(150, 470), Point(170, 490))
+read_entry_back_text = Text(Point(160, 480), "Back")
+read_entry_back_text.setSize(8)
+
+read_entry_elements = {
+    "title": read_entry_title,
+    "body": read_entry_body,
+    "back_to_read": read_entry_back,
+    "back_to_read_text": read_entry_back_text,
+}
+
 
 def open_window() -> GraphWin:
     """Create a new window, and return it"""
@@ -145,19 +167,40 @@ def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, pag
     for element in login_elements:
         login_elements[element].undraw()
 
+    for element in read_entry_elements:
+        read_entry_elements[element].undraw()
+
     read_elements['page_text'].setText(f"{page_start} - {page_end}")
 
     for element in read_elements:
         read_elements[element].draw(window)
 
-def get_click(window: GraphWin) -> EasyRectangle | None:
+
+def draw_read_entry(window: GraphWin, title: str, text: str):
+    for element in read_elements:
+        read_elements[element].undraw()
+
+    for element in create_elements:
+        create_elements[element].undraw()
+
+    for element in login_elements:
+        login_elements[element].undraw()
+
+    for element in read_entry_elements:
+        read_entry_elements[element].draw(window)
+
+    read_entry_elements['title'].setText(title)
+    read_entry_elements['body'].setText(text)
+
+
+def get_click(window: GraphWin) -> str | None:
     """
     Return what element is clicked to the controller.
     """
 
     mouse_pos = window.getMouse()
 
-    all_elements = {**login_elements, **create_elements, **read_elements}
+    all_elements = {**login_elements, **create_elements, **read_elements, **read_entry_elements}
     for element in all_elements:
         if type(all_elements[element]) == EasyRectangle:
             if all_elements[element].clicked(mouse_pos):

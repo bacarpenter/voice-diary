@@ -55,7 +55,6 @@ def main():
 
     else:
       clicked = GUI.get_click(window)
-      print(clicked)
 
       match clicked:
         case 'login_button':
@@ -106,8 +105,17 @@ def main():
           state = "read"
           state_did_change = True
 
+        case 'back_to_read':
+          state = "read"
+          state_did_change = True
+
         case "logout":
           break
+
+      if type(clicked) == int:
+        entry = database.read_entry(clicked)
+        entry.decrypt(passphrase)
+        GUI.draw_read_entry(window, entry.title, entry.text)
      
 
 
