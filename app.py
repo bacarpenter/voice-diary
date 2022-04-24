@@ -5,17 +5,13 @@
 # Ben Carpenter and Nancy Onyimah
 # April 7, 2022
 # ------------- app.py -------------
-from crypt import crypt
-from email.quoprimime import body_check
 from time import sleep
 import database
-from entry import Entry
 import crypto
 import GUI
 import graphics
 import speech_recognition as sr
-import spech_rec_helpers as sr_helpers
-from playsound import playsound 
+import spech_rec_helpers as sr_helpers 
 
 def main():
   database.initialize_connection()
