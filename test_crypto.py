@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# || ---------- test_crypto.py ---------- ||
+# Tests for crypto.py
+# 
+# Ben Carpenter and Nancy Onyimah
+# April 24, 2022
+# ------------- test_crypto.py -------------
+
+
 from crypto import convert_passphrase_to_key, encrypt, decrypt
 
 def test_convert_passphrase_to_key():

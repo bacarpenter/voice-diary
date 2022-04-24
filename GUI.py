@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # || ---------- GUI.py ---------- ||
-# SHORT DESCRIPTION
+# All of the code for controlling the
+# view of our app.
 # 
-# Ben Carpenter
+# Ben Carpenter and Nancy Onyimah
 # April 18, 2022
 # ------------- GUI.py -------------
 

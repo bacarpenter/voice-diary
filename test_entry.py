@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# || ---------- test_entry.py ---------- ||
+# Tests for entry.py
+# 
+# Ben Carpenter and Nancy Onyimah
+# April 24, 2022
+# ------------- test_entry.py -------------
+
+
 from datetime import datetime
 from entry import Entry
 import crypto

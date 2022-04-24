@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # || ---------- database.py ---------- ||
-# Database functions
+# Functions for reading from and writing to the database.
 # 
-# Ben Carpenter
+# Ben Carpenter and Nancy Onyimah
 # April 7, 2022
 # ------------- database.py -------------
 
-# Connection initialization 
 from typing import List
 import mysql.connector
 from mysql.connector import errorcode

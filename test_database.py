@@ -1,7 +1,18 @@
+#!/usr/bin/env python3
+# || ---------- test_database.py ---------- ||
+# Tests for database.py
+# 
+# Ben Carpenter and Nancy Onyimah
+# April 24, 2022
+# ------------- test_database.py -------------
+
+
 import database
 import mysql.connector
 
-database.initialize_connection(schema="voice_diary_test") # Open the test schema
+database.initialize_connection(schema="voice_diary_test") # Open the test schema. 
+# Note: To run these tests, you will need to create an additional schema, called voice_diary_test, and grant python_user
+#       permission to use it.
 
 def clear_database():
     """Delete all entries from the database for reproducible testing"""

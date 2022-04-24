@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# || ---------- speech_rec_helpers.py ---------- ||
+# A file to house the function that listens for
+# user speech. Function is curtesy of RealPython.
+# https://realpython.com/python-speech-recognition/#putting-it-all-together-a-guess-the-word-game
+# 
+# RealPython
+# April 24, 2022
+# ------------- speech_rec_helpers.py -------------
+
+
 import speech_recognition as sr
 
 

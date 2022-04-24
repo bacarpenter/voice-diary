@@ -1,4 +1,14 @@
-from graphics import *
+#!/usr/bin/env python3
+# || ---------- Entry_Button.py ---------- ||
+# A class that can be used to display diary
+# entries
+# 
+# Ben Carpenter and Nancy Onyimah
+# April 24, 2022
+# ------------- Entry_Button.py -------------
+
+
+from graphics import Point, color_rgb, Text, GraphWin
 from EasyRectangle import EasyRectangle
 
 class EntryButton:

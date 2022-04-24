@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # || ---------- setup.py ---------- ||
-# Python script to set user up for use of voice diary
+# Python script to set user up for use 
+# of voice diary
 # 
 # Ben Carpenter
 # April 17, 2022

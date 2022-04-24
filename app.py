@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # || ---------- app.py ---------- ||
-# SHORT DESCRIPTION
+# The main program for voice-diary
 # 
 # Ben Carpenter and Nancy Onyimah
 # April 7, 2022
@@ -14,6 +14,7 @@ import speech_recognition as sr
 import spech_rec_helpers as sr_helpers 
 
 def main():
+  # Setup for execution
   database.initialize_connection()
   window = GUI.open_window()
   window.setBackground(graphics.color_rgb(255, 196, 252))
@@ -28,7 +29,7 @@ def main():
 
   # App Loop
   while True:
-    if state_did_change:
+    if state_did_change: # If the state changes, we draw the new screen.
       match state:
         case "login": 
           # Login page
@@ -36,23 +37,24 @@ def main():
           state_did_change = False
         case "read": 
           # Read page
-          entries = database.read_all_entries()
-          entries.sort(key = lambda x: x.timestamp)
+          entries = database.read_all_entries() # Get the entries from the database
+          entries.sort(key = lambda x: x.timestamp) # Sort them via their timestamp
           for e in entries:
             e.decrypt(passphrase)
-          
+           
           GUI.draw_read(window, entries, page_start, page_end)
           state_did_change = False
         case "create": 
-          # Login page
+          GUI.draw_create(window)
           state_did_change = False
         case "close":
-          break
-        case _:
-          exit(1)
+          break # Exit the loop and logout
 
     else:
-      clicked = GUI.get_click(window)
+      try: 
+        clicked = GUI.get_click(window)
+      except graphics.GraphicsError: # This error will be thrown if the user closes the window with the macOS window close instead of the logout button
+        break # Exit the loop and logout
 
       match clicked:
         case 'login_button':
@@ -85,7 +87,6 @@ def main():
               state_did_change = True
 
         case 'create':
-          GUI.draw_create(window)
           state = "create"
           state_did_change = True
 
