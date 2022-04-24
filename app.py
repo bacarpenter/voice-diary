@@ -6,6 +6,7 @@
 # April 7, 2022
 # ------------- app.py -------------
 from crypt import crypt
+from email.quoprimime import body_check
 from time import sleep
 import database
 from entry import Entry
@@ -40,6 +41,7 @@ def main():
         case "read": 
           # Read page
           entries = database.read_all_entries()
+          entries.sort(key = lambda x: x.timestamp)
           for e in entries:
             e.decrypt(passphrase)
           
@@ -63,7 +65,7 @@ def main():
           microphone = sr.Microphone()
 
           # Listen for speech
-          GUI.update_login_notification("Listening:")
+          GUI.update_login_notification("Wait 1 second and speak...")
           spoken_phrase = sr_helpers.recognize_speech_from_mic(recognizer, microphone)
 
           if spoken_phrase['success'] == False:
@@ -87,6 +89,7 @@ def main():
               state_did_change = True
 
         case 'create':
+          GUI.draw_create(window)
           state = "create"
           state_did_change = True
 
@@ -102,6 +105,16 @@ def main():
           
 
         case 'save':
+          title = GUI.create_elements['title_entry'].getText()
+          title = crypto.encrypt(title, passphrase)
+          body = GUI.create_elements['create_body_entry'].getText()
+          body = crypto.encrypt(body, passphrase)
+
+          database.create_entry(title, body)
+          
+          database.close_connection()
+          database.initialize_connection()
+
           state = "read"
           state_did_change = True
 

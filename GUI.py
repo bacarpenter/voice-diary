@@ -8,7 +8,6 @@
 
 # https://realpython.com/iterate-through-dictionary-python/
 
-import re
 from graphics import GraphWin, GraphicsObject, Entry, Point, Circle, Text, color_rgb
 import entry
 
@@ -76,8 +75,41 @@ read_elements = {
     "create_text": create_text
 }
 
+create_entry_text = Text(Point(100,50), "Create Entry")
+create_entry_text.setSize(24)
+create_entry_text.setStyle("bold")
+create_entry_text.setFace("times roman")
+create_entry_text.setTextColor(color_rgb(166, 112, 169))
+
+create_title_text = Text(Point(100, 80), "Title:")
+create_title_text.setSize(12)
+create_title_text.setStyle("bold")
+create_title_text.setFace("times roman")
+create_title_text.setTextColor(color_rgb(166, 112, 169))
+
+create_title_entry = Entry(Point(300, 80), 32)
+
+create_body_text = Text(Point(250, 120), "Body Text:")
+create_body_text.setSize(12)
+create_body_text.setStyle("bold")
+create_body_text.setFace("times roman")
+create_body_text.setTextColor(color_rgb(166, 112, 169))
+
+create_body_entry = Entry(Point(250, 140), 64)
+
+save_button = EasyRectangle(Point(330, 470), Point(350, 490))
+save_text = Text(Point(340, 480), "Save")
+save_text.setSize(8)
+
+
 create_elements = {
-    # The items that make up the Create Screen go here
+    "create_entry_text": create_entry_text,
+    "title_text": create_title_text,
+    "title_entry": create_title_entry,
+    "create_body_text": create_body_text,
+    "create_body_entry": create_body_entry,
+    "save": save_button,
+    "save_text": save_text
 }
 
 read_entry_title = Text(Point(100,50), "")
@@ -102,6 +134,7 @@ read_entry_elements = {
     "back_to_read_text": read_entry_back_text,
 }
 
+all_elements = {**login_elements, **create_elements, **read_elements, **read_entry_elements}
 
 def open_window() -> GraphWin:
     """Create a new window, and return it"""
@@ -170,6 +203,9 @@ def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, pag
     for element in read_entry_elements:
         read_entry_elements[element].undraw()
 
+    for element in create_elements:
+        create_elements[element].undraw()
+
     read_elements['page_text'].setText(f"{page_start} - {page_end}")
 
     for element in read_elements:
@@ -192,15 +228,27 @@ def draw_read_entry(window: GraphWin, title: str, text: str):
     read_entry_elements['title'].setText(title)
     read_entry_elements['body'].setText(text)
 
+def draw_create(window: GraphWin):
+    for element in read_elements:
+        read_elements[element].undraw()
+
+    for element in create_elements:
+        create_elements[element].undraw()
+
+    for element in login_elements:
+        login_elements[element].undraw()
+
+    for element in create_elements:
+        create_elements[element].draw(window)
+
 
 def get_click(window: GraphWin) -> str | None:
     """
     Return what element is clicked to the controller.
     """
+    all_elements = {**login_elements, **create_elements, **read_elements, **read_entry_elements}
 
     mouse_pos = window.getMouse()
-
-    all_elements = {**login_elements, **create_elements, **read_elements, **read_entry_elements}
     for element in all_elements:
         if type(all_elements[element]) == EasyRectangle:
             if all_elements[element].clicked(mouse_pos):
