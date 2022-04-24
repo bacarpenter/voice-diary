@@ -15,6 +15,8 @@ from EasyRectangle import EasyRectangle
 from Entry_Button import EntryButton
 from typing import List
 
+## =============== Login =============== ##
+
 mic_button = EasyRectangle(Point(210,210), Point(290, 290))
 mic_button.setFill(color_rgb(166, 112, 169))
 
@@ -23,6 +25,7 @@ welcome_text.setSize(24)
 welcome_text.setStyle("bold")
 welcome_text.setFace("times roman")
 welcome_text.setTextColor(color_rgb(166, 112, 169))
+
 
 login_text = Text(Point(250,400), "Please speak your passphrase!")
 login_text.setSize(18)
@@ -40,6 +43,7 @@ login_elements= {
     "notification": notification
 }
 
+## =============== Read All =============== ##
 
 entries_text = Text(Point(100,50), "Entries")
 entries_text.setSize(24)
@@ -74,6 +78,8 @@ read_elements = {
     "create": create_button,
     "create_text": create_text
 }
+
+## =============== Create Entry =============== ##
 
 create_entry_text = Text(Point(100,50), "Create Entry")
 create_entry_text.setSize(24)
@@ -112,6 +118,8 @@ create_elements = {
     "save_text": save_text
 }
 
+## =============== Read Entry =============== ##
+
 read_entry_title = Text(Point(100,50), "")
 read_entry_title.setSize(24)
 read_entry_title.setStyle("bold")
@@ -134,7 +142,7 @@ read_entry_elements = {
     "back_to_read_text": read_entry_back_text,
 }
 
-all_elements = {**login_elements, **create_elements, **read_elements, **read_entry_elements}
+## =============== Draw Functions =============== ##
 
 def open_window() -> GraphWin:
     """Create a new window, and return it"""
@@ -229,6 +237,7 @@ def draw_read_entry(window: GraphWin, title: str, text: str):
     read_entry_elements['body'].setText(text)
 
 def draw_create(window: GraphWin):
+
     for element in read_elements:
         read_elements[element].undraw()
 
@@ -241,6 +250,7 @@ def draw_create(window: GraphWin):
     for element in create_elements:
         create_elements[element].draw(window)
 
+## =============== Other Functions =============== ##
 
 def get_click(window: GraphWin) -> str | None:
     """
