@@ -3,7 +3,7 @@
 # Python script to set user up for use 
 # of voice diary
 # 
-# Ben Carpenter
+# Ben Carpenter and Nancy Onyimah
 # April 17, 2022
 # ------------- setup.py -------------
 import subprocess
@@ -14,6 +14,7 @@ def main():
 
     print("[1/4] Installing dependencies... ", end="")
     subprocess.run(["python3", "-m", "pip", "install", "-r", "requirements.txt", "-q"]) #https://stackabuse.com/executing-shell-commands-with-python/
+    subprocess.run(["brew", "install", "portaudio"])
     print("done ✅")
 
     print("[2/4] Checking that mysql is installed... ", end="")
@@ -21,7 +22,7 @@ def main():
         print("done ✅")
 
     else:
-        print("You do not have mysql installed, or it is not on your path.")
+        print("You do not have mysql installed, it is not running, or it is not on your path.")
         exit(1)
     
     

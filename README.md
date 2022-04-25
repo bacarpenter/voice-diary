@@ -4,6 +4,8 @@ A early 2000s inspired voice protected diary application
 
 # Setup
 
+The app requires the you have Python 3.10 installed, along with MySQL. It is developed for MacOS.
+
 To setup the app, run the setup script with
 
 ```zsh
