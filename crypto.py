@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# || ---------- crypto.py ---------- ||
+# Functions for encrypting and decrypting data 
+# in the database
+# 
+# Ben Carpenter and Nancy Onyimah
+# April 24, 2022
+# ------------- crypto.py -------------
+
+
 from Crypto.Cipher import Salsa20
 import hashlib
 
@@ -17,11 +27,11 @@ def encrypt(string: str, key) -> str:
     # https://pycryptodome.readthedocs.io/en/latest/src/cipher/salsa20.html
     cipher = Salsa20.new(key=key.encode())
     data = cipher.nonce + cipher.encrypt(string.encode())
-    return data.hex() #https://stackoverflow.com/a/36149089
+    return data.hex() # Convert to hex, so it is just a string. https://stackoverflow.com/a/36149089
 
 
 
-def decrypt(string: str, key) -> str:
+def decrypt(string: str, key) -> str | None:
     """
     Decrypt user text with key
     """
@@ -32,4 +42,9 @@ def decrypt(string: str, key) -> str:
     cipher = Salsa20.new(key=key.encode(), nonce=msg_nonce)
     plaintext = cipher.decrypt(ciphertext)
 
-    return plaintext.decode()
+    try:
+        plaintext = plaintext.decode()
+    except UnicodeDecodeError:
+        plaintext = None
+    
+    return plaintext
