@@ -199,7 +199,7 @@ def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, pag
 
     if page_end > len(entries): page_end = len(entries)
     
-    for entry in entries[page_start - 1: page_end-1]:
+    for entry in entries[page_start: page_end]:
         entry_elements.update({entry.id: EntryButton(Point(25, top_left_y), entry.title, entry.text)}),
         top_left_y += 60
 
@@ -215,7 +215,7 @@ def draw_read(window: GraphWin, entries: List[entry.Entry], page_start: int, pag
     for element in create_elements:
         create_elements[element].undraw()
 
-    read_elements['page_text'].setText(f"{page_start} - {page_end}")
+    read_elements['page_text'].setText(f"{page_start + 1} - {page_end}")
 
     for element in read_elements:
         read_elements[element].draw(window)

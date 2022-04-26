@@ -24,8 +24,8 @@ def main():
   state_did_change = True
   state = "login" # App starts at login page
 
-  page_start = 1
-  page_end = 7
+  page_start = 0
+  page_end = 8
 
   # App Loop
   while True:
@@ -72,19 +72,19 @@ def main():
             GUI.update_login_notification("We didn't hear anything")
           else:
             passphrase = crypto.convert_passphrase_to_key(spoken_phrase['transcription'])
-
-            # Check if passphrase is correct by seeing if it decrypts an entry. If there are no entries, ignore this check
-            all_entries = database.read_all_entries()
-            if len(all_entries) != 0:
-              all_entries[0].decrypt(passphrase)
-              if  all_entries[0].text == None:
-                GUI.update_login_notification(f"Incorrect passphrase. We heard: {spoken_phrase['transcription']}")
-              else:
-                state = "read" # Once the login is completed, change the state to read mode
-                state_did_change = True
+          
+          # Check if passphrase is correct by seeing if it decrypts an entry. If there are no entries, ignore this check
+          all_entries = database.read_all_entries()
+          if len(all_entries) != 0:
+            all_entries[0].decrypt(passphrase)
+            if  all_entries[0].text == None:
+              GUI.update_login_notification(f"Incorrect passphrase. We heard: {spoken_phrase['transcription']}")
             else:
               state = "read" # Once the login is completed, change the state to read mode
               state_did_change = True
+          else:
+            state = "read" # Once the login is completed, change the state to read mode
+            state_did_change = True
 
         case 'create':
           state = "create"

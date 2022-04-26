@@ -33,6 +33,8 @@ def initialize_connection(schema="voice_diary"):
         else:
             print(err)
 
+    db.autocommit = True
+
 def close_connection():
     """
     Close the database connection
@@ -61,8 +63,6 @@ def create_entry(title: str, text: str)-> int:
 
     cursor.execute(add_entry, entry_data)
     entry_id = cursor.lastrowid
-
-    db.commit()
 
     cursor.close()
     return entry_id
